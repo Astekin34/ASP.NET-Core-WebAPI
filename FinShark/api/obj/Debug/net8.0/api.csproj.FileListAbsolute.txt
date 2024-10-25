@@ -175,3 +175,4 @@ C:\Users\isado\Documents\GitHub\ASP.NET-Core-WebAPI\FinShark\api\obj\Debug\net8.
 C:\Users\isado\Documents\GitHub\ASP.NET-Core-WebAPI\FinShark\api\obj\Debug\net8.0\api.pdb
 C:\Users\isado\Documents\GitHub\ASP.NET-Core-WebAPI\FinShark\api\obj\Debug\net8.0\api.genruntimeconfig.cache
 C:\Users\isado\Documents\GitHub\ASP.NET-Core-WebAPI\FinShark\api\obj\Debug\net8.0\ref\api.dll
+C:\Users\isado\Documents\GitHub\ASP.NET-Core-WebAPI\FinShark\api\obj\Debug\net8.0\api.sourcelink.json
