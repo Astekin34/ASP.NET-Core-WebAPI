@@ -9,7 +9,8 @@ namespace api.Mappers
 {
     public static class StockMappers
     {
-        public static StockDto ToStockDto(this Stocks stockModel){
+        public static StockDto ToStockDto(this Stocks stockModel)
+        {
             return new StockDto
             {
                 Id = stockModel.Id,
@@ -18,7 +19,8 @@ namespace api.Mappers
                 Purchase = stockModel.Purchase,
                 LastDiv = stockModel.LastDiv,
                 Industry = stockModel.Industry,
-                MarketCap = stockModel.MarketCap
+                MarketCap = stockModel.MarketCap,
+                Comments = stockModel.Comments.Select(c => c.ToCommentDto()).ToList()
             };
         }
 
@@ -26,12 +28,12 @@ namespace api.Mappers
         {
             return new Stocks
             {
-                    Symbol = stockDto.Symbol,
-                    CompanyName =  stockDto.CompanyName,
-                    Purchase = stockDto.Purchase,
-                    LastDiv = stockDto.LastDiv,
-                    Industry = stockDto.Industry,
-                    MarketCap = stockDto.MarketCap
+                Symbol = stockDto.Symbol,
+                CompanyName = stockDto.CompanyName,
+                Purchase = stockDto.Purchase,
+                LastDiv = stockDto.LastDiv,
+                Industry = stockDto.Industry,
+                MarketCap = stockDto.MarketCap
             };
         }
     }

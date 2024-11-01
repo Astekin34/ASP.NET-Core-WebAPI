@@ -20,27 +20,53 @@ namespace api.Repository
 
         public async Task<Stocks> CreateAsync(Stocks stockModel)
         {
-            await _context.Stocks
+            await _context.Stock.AddAsync(stockModel);
+            await _context.SaveChangesAsync();
+            return stockModel;
         }
 
         public async Task<Stocks?> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var stockModel = await _context.Stock.FirstOrDefaultAsync(x => x.Id == id);
+            if (stockModel == null)
+            {
+                return null;
+            }
+
+            _context.Stock.Remove(stockModel);
+            await _context.SaveChangesAsync();
+            return stockModel;
         }
 
         public async Task<List<Stocks>> GetAllAsync()
         {
-            return await _context.Stock.ToListAsync();
+            return await _context.Stock.Include(c => c.Comments).ToListAsync();
         }
 
         public async Task<Stocks?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Stock.Include(c => c.Comments).FirstOrDefaultAsync(i => i.Id == id);
         }
 
         public async Task<Stocks?> UpdateAsync(int id, UpdateStockRequestDto stockDto)
         {
-            throw new NotImplementedException();
+            var existingStock = await _context.Stock.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (existingStock == null)
+            {
+                return null;
+            }
+
+            existingStock.Symbol = stockDto.Symbol;
+            existingStock.CompanyName = stockDto.CompanyName;
+            existingStock.Purchase = stockDto.Purchase;
+            existingStock.LastDiv = stockDto.LastDiv;
+            existingStock.Industry = stockDto.Industry;
+            existingStock.MarketCap = stockDto.MarketCap;
+
+            await _context.SaveChangesAsync();
+            return existingStock;
+
         }
     }
 }
