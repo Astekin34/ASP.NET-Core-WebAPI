@@ -6,6 +6,7 @@ using api.Interfaces;
 using api.Mappers;
 using api.Models;
 using api.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -29,6 +30,7 @@ namespace api.Controllers
             return Ok(commentDto);
         }
 
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
             var comment = await _commentRepo.GetByIdAsync(id);

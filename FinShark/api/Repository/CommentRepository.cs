@@ -13,7 +13,6 @@ namespace api.Repository
     public class CommentRepository : ICommentRepository
     {
         private readonly ApplicationDbContext _context;
-
         public CommentRepository(ApplicationDbContext context)
         {
             _context = context;
