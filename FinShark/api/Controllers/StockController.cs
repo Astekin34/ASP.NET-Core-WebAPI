@@ -5,12 +5,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
 using api.DTOs.Stocks;
+using api.Helpers;
 using api.Interfaces;
 using api.Mappers;
 using api.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace api.Controllers
 {
@@ -28,13 +30,13 @@ namespace api.Controllers
 
         [HttpGet]
 
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] QueryObject query)
         {
             if (!ModelState.IsValid)
 
                 return BadRequest(ModelState);
 
-            var Stocks = await _stockRepo.GetAllAsync();
+            var Stocks = await _stockRepo.GetAllAsync(query);
             var stockDto = Stocks.Select(s => s.ToStockDto());
             return Ok(Stocks);
         }
