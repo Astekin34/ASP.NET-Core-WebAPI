@@ -51,14 +51,14 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "43c75636-9a3c-4bdd-a1dc-28e6f3be1e3d",
-                            ConcurrencyStamp = "0ef87833-afe5-4580-9ae3-a537518b6743",
+                            Id = "9e9d3a73-68e6-4d01-86c9-66ec2e1c37ea",
+                            ConcurrencyStamp = "83f0796d-45b7-44a6-baa9-6867bc554077",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "2fa1e8ab-a5d9-40fc-aa5a-0647f173ecac",
+                            Id = "877e81dc-31f0-4c13-8a55-8cfc175ec046",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -243,6 +243,10 @@ namespace api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("AppUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -258,6 +262,8 @@ namespace api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
 
                     b.HasIndex("StockId");
 
@@ -366,9 +372,17 @@ namespace api.Migrations
 
             modelBuilder.Entity("api.Models.Comment", b =>
                 {
+                    b.HasOne("api.Models.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("api.Models.Stocks", "Stock")
                         .WithMany("Comments")
                         .HasForeignKey("StockId");
+
+                    b.Navigation("AppUser");
 
                     b.Navigation("Stock");
                 });
