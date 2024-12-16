@@ -5,6 +5,7 @@ using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 using api.DTOs.Comment;
 using api.Extensions;
+using api.Helpers;
 using api.Interfaces;
 using api.Mappers;
 using api.Models;
@@ -33,13 +34,14 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        [Authorize]
+        public async Task<IActionResult> GetAll([FromQuery] CommentQueryObject queryObject)
         {
             if (!ModelState.IsValid)
 
                 return BadRequest(ModelState);
 
-            var Comments = await _commentRepo.GetAllAsync();
+            var Comments = await _commentRepo.GetAllAsync(queryObject);
 
             var commentDto = Comments.Select(s => s.ToCommentDto());
             return Ok(commentDto);
